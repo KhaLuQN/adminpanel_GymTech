@@ -1,60 +1,27 @@
 @extends('admin.layouts.master')
-@section('page_title', 'Bảng Điều Khiển')
+@section('page_title', 'Danh sách hội viên đã xóa')
 
 @section('breadcrumbs')
     <li><a href="{{ route('home') }}" class="link link-hover">Admin</a></li>
-    <li><a href="#" class="link link-hover">Tất cả hội viên</a></li>
-
+    <li><a href="{{ route('admin.members.index') }}" class="link link-hover">Tất cả hội viên</a></li>
+    <li><a href="#" class="link link-hover">Hội viên đã xóa</a></li>
 @endsection
+
 @section('content')
     <div class="p-6">
         <div class="card bg-base-200 shadow-xl">
             <div class="card-body">
                 <!-- Header -->
                 <div class="card-title flex justify-between items-center mb-6">
-                        <div>
-                            <h4 class="text-3xl font-bold text-primary">Danh sách thành viên</h4>
-                            <p class="text-base-content/70 mt-1">Quản lý thông tin các thành viên trong hệ thống</p>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <a href="{{ route('admin.members.deleted') }}"
-                                class="btn btn-outline btn-info btn-lg gap-2 shadow-lg hover:shadow-xl transition-all">
-                                <i class="ri-delete-bin-line text-lg"></i>
-                                Hội viên đã xóa
-                            </a>
-                            <a href="{{ route('admin.members.create') }}"
-                                class="btn btn-primary btn-lg gap-2 shadow-lg hover:shadow-xl transition-all">
-                                <i class="ri-user-add-line text-lg"></i>
-                                Thêm thành viên
-                            </a>
-                        </div>
+                    <div>
+                        <h4 class="text-3xl font-bold text-primary">Danh sách hội viên đã xóa</h4>
+                        <p class="text-base-content/70 mt-1">Quản lý thông tin các thành viên đã bị xóa mềm</p>
                     </div>
-
-                <!-- Statistics Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                    <div class="stat bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg shadow-lg">
-                        <div class="stat-figure">
-                            <i class="ri-user-check-line text-2xl opacity-70"></i>
-                        </div>
-                        <div class="stat-title text-green-100">Đang hoạt động</div>
-                        <div class="stat-value text-2xl">{{ $members->where('status', 'active')->count() }}</div>
-                    </div>
-
-                    <div class="stat bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-lg shadow-lg">
-                        <div class="stat-figure">
-                            <i class="ri-user-unfollow-line text-2xl opacity-70"></i>
-                        </div>
-                        <div class="stat-title text-yellow-100">Hết hạn</div>
-                        <div class="stat-value text-2xl">{{ $members->where('status', 'expired')->count() }}</div>
-                    </div>
-
-                    <div class="stat bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg shadow-lg">
-                        <div class="stat-figure">
-                            <i class="ri-user-forbid-line text-2xl opacity-70"></i>
-                        </div>
-                        <div class="stat-title text-red-100">Đã khóa</div>
-                        <div class="stat-value text-2xl">{{ $members->where('status', 'blocked')->count() }}</div>
-                    </div>
+                    <a href="{{ route('admin.members.index') }}"
+                        class="btn btn-primary btn-lg gap-2 shadow-lg hover:shadow-xl transition-all">
+                        <i class="ri-arrow-left-line text-lg"></i>
+                        Quay lại danh sách hội viên
+                    </a>
                 </div>
 
                 <!-- Table -->
@@ -140,52 +107,27 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        @if ($member->status === 'active')
-                                            <div class="badge badge-success gap-1 font-medium">
-                                                <i class="ri-check-line text-sm"></i>
-                                                Đang hoạt động
-                                            </div>
-                                        @elseif($member->status === 'expired')
-                                            <div class="badge badge-warning gap-1 font-medium">
-                                                <i class="ri-time-line text-sm"></i>
-                                                Hết hạn
-                                            </div>
-                                        @else
-                                            <div class="badge badge-error gap-1 font-medium">
-                                                <i class="ri-close-line text-sm"></i>
-                                                Đã khóa
-                                            </div>
-                                        @endif
+                                        <div class="badge badge-error gap-1 font-medium">
+                                            <i class="ri-delete-bin-line text-sm"></i>
+                                            Đã xóa
+                                        </div>
                                     </td>
                                     <td>
                                         <div class="flex items-center justify-center space-x-2">
-                                            <!-- Nút xem chi tiết -->
-                                            <div class="tooltip" data-tip="Xem chi tiết">
-                                                <a href="{{ route('admin.members.show', $member->member_id) }}"
-                                                    class="btn btn-sm btn-circle btn-outline btn-info hover:scale-110 transition-transform">
-                                                    <i class="ri-eye-line text-base"></i>
-                                                </a>
-                                            </div>
-
-                                            <!-- Nút sửa -->
-                                            <div class="tooltip" data-tip="Chỉnh sửa">
-                                                <a href="{{ route('admin.members.edit', $member->member_id) }}"
-                                                    class="btn btn-sm btn-circle btn-outline btn-warning hover:scale-110 transition-transform">
-                                                    <i class="ri-edit-line text-base"></i>
-                                                </a>
-                                            </div>
-
-                                            <!-- Nút xóa -->
-                                            <div class="tooltip" data-tip="Xóa thành viên">
-                                                <form action="{{ route('admin.members.destroy', $member->member_id) }}"
-                                                    method="POST" id="delete-member-form-{{ $member->member_id }}"
+                                            <!-- Nút khôi phục -->
+                                            <div class="tooltip" data-tip="Khôi phục hội viên">
+                                                <form action="{{ route('admin.members.restore', $member->member_id) }}"
+                                                    method="POST" id="restore-member-form-{{ $member->member_id }}"
                                                     class="inline-block">
                                                     @csrf
-                                                    @method('DELETE')
                                                     <button type="button"
-                                                        class="btn btn-sm btn-circle btn-outline btn-error delete-btn hover:scale-110 transition-transform"
-                                                        data-form-id="delete-member-form-{{ $member->member_id }}">
-                                                        <i class="ri-delete-bin-line text-base"></i>
+                                                        class="btn btn-sm btn-circle btn-outline btn-success confirm-action-btn hover:scale-110 transition-transform"
+                                                        data-form-id="restore-member-form-{{ $member->member_id }}"
+                                                        data-swal-title="Xác nhận khôi phục?"
+                                                        data-swal-text="Bạn có chắc chắn muốn khôi phục hội viên này không?"
+                                                        data-swal-icon="question"
+                                                        data-swal-confirm-text="Khôi phục">
+                                                        <i class="ri-refresh-line text-base"></i>
                                                     </button>
                                                 </form>
                                             </div>
@@ -203,11 +145,11 @@
                         <div class="mb-4">
                             <i class="ri-user-line text-6xl text-base-content/20"></i>
                         </div>
-                        <h3 class="text-xl font-semibold text-base-content/70 mb-2">Chưa có thành viên nào</h3>
-                        <p class="text-base-content/50 mb-4">Hãy thêm thành viên đầu tiên vào hệ thống</p>
-                        <a href="{{ route('admin.members.create') }}" class="btn btn-primary">
-                            <i class="ri-user-add-line mr-2"></i>
-                            Thêm thành viên ngay
+                        <h3 class="text-xl font-semibold text-base-content/70 mb-2">Chưa có hội viên nào bị xóa</h3>
+                        <p class="text-base-content/50 mb-4">Không có hội viên nào trong thùng rác</p>
+                        <a href="{{ route('admin.members.index') }}" class="btn btn-primary">
+                            <i class="ri-arrow-left-line mr-2"></i>
+                            Quay lại danh sách hội viên
                         </a>
                     </div>
                 @endif

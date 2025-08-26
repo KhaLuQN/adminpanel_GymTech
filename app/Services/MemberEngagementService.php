@@ -30,7 +30,7 @@ class MemberEngagementService
             $query->whereNotIn('member_id', $sentMemberIds);
         }
 
-        $members   = $query->with('subscriptions')->paginate(50)->withQueryString();
+        $members   = $query->with('subscriptions')->paginate(60)->withQueryString();
         $templates = EmailTemplate::all();
 
         return [

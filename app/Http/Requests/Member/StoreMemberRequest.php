@@ -2,6 +2,7 @@
 namespace App\Http\Requests\Member;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreMemberRequest extends FormRequest
 {
@@ -22,10 +23,34 @@ class StoreMemberRequest extends FormRequest
     {
         return [
             'full_name'    => 'required|string|max:100',
-            'phone'        => 'required|string|max:10|unique:members,phone',
-            'email'        => 'required|email|max:100|unique:members,email',
+            'phone'        => [
+                'required',
+                'string',
+                'max:10',
+                Rule::unique('members', 'phone')->where(function ($query) {
+                    $query->whereNull('deleted_at')
+                          ->orWhereNotNull('deleted_at');
+                }),
+            ],
+            'email'        => [
+                'required',
+                'email',
+                'max:100',
+                Rule::unique('members', 'email')->where(function ($query) {
+                    $query->whereNull('deleted_at')
+                          ->orWhereNotNull('deleted_at');
+                }),
+            ],
             'notes'        => 'nullable|string',
-            'rfid_card_id' => 'nullable|string|max:50|unique:members,rfid_card_id',
+            'rfid_card_id' => [
+                'nullable',
+                'string',
+                'max:50',
+                Rule::unique('members', 'rfid_card_id')->where(function ($query) {
+                    $query->whereNull('deleted_at')
+                          ->orWhereNotNull('deleted_at');
+                }),
+            ],
             'img'          => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }

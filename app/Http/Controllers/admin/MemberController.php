@@ -69,4 +69,20 @@ class MemberController extends Controller
             return redirect()->route('admin.members.index')->with('error', 'Xóa thất bại: ' . $e->getMessage());
         }
     }
+
+    public function deleted()
+    {
+        $members = $this->memberService->getDeletedMembersForIndex();
+        return view('admin.pages.member.deleted', compact('members'));
+    }
+
+    public function restore(Member $member)
+    {
+        try {
+            $this->memberService->restoreMember($member);
+            return redirect()->route('admin.members.deleted')->with('success', 'Khôi phục hội viên thành công.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.members.deleted')->with('error', 'Khôi phục thất bại: ' . $e->getMessage());
+        }
+    }
 }

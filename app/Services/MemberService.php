@@ -13,6 +13,7 @@ class MemberService
         return Member::select('member_id', 'full_name', 'phone', 'email'
             , 'status', 'img', 'rfid_card_id')
             ->latest('member_id')
+            ->withoutTrashed()
             ->get();
     }
 
@@ -71,6 +72,20 @@ class MemberService
         }
 
         $member->delete();
+    }
+
+    public function restoreMember(Member $member): void
+    {
+        $member->restore();
+    }
+
+    public function getDeletedMembersForIndex()
+    {
+        return Member::select('member_id', 'full_name', 'phone', 'email'
+            , 'status', 'img', 'rfid_card_id')
+            ->latest('member_id')
+            ->onlyTrashed()
+            ->get();
     }
 
     public function getMemberProfileData(Member $member): array

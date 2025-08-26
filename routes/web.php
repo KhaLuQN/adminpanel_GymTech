@@ -37,7 +37,9 @@ Route::prefix('admin/member')->group(function () {
 
     Route::put('/{member}/update', [MemberController::class, 'update'])->name('admin.members.update');
     Route::get('/{member}/show', [MemberController::class, 'show'])->name('admin.members.show');
-    Route::delete('/{id}', [MemberController::class, 'destroy'])->name('admin.members.destroy');
+    Route::delete('/{member}', [MemberController::class, 'destroy'])->name('admin.members.destroy');
+    Route::get('/deleted', [MemberController::class, 'deleted'])->name('admin.members.deleted');
+    Route::post('/{member}/restore', [MemberController::class, 'restore'])->name('admin.members.restore')->withTrashed();
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {

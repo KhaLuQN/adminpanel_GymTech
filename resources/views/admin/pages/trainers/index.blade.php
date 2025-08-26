@@ -25,6 +25,9 @@
                     <table class="table table-zebra w-full datatable">
                         <thead>
                             <tr>
+                                <th class="text-center w-16">
+                                    <i class="ri-hashtag text-lg"></i>
+                                </th>
                                 <th>Ảnh</th>
                                 <th>Họ tên</th>
                                 <th>Chuyên môn</th>
@@ -36,6 +39,9 @@
                         <tbody>
                             @foreach ($trainers as $trainer)
                                 <tr>
+                                    <td class="text-center font-mono text-sm">
+                                        <div class="badge badge-outline">{{ $trainer->id }}</div>
+                                    </td>
                                     <td>
                                         <div class="avatar">
                                             <div class="w-12 rounded-full">
@@ -57,13 +63,13 @@
                                     <td><span class="badge badge-success">Đang hoạt động</span></td>
                                     <td>
                                         <div class="flex items-center space-x-2">
-                                            <a href="{{ route('admin.trainers.edit', $trainer->id) }}" class="btn btn-sm btn-info">
+                                            <a href="{{ route('admin.trainers.edit', $trainer->id) }}"
+                                                class="btn btn-sm btn-info">
                                                 <i class="ri-edit-line"></i>
                                             </a>
 
                                             <form action="{{ route('admin.trainers.destroy', $trainer->id) }}"
-                                                method="POST"
-                                                class="delete-form">
+                                                method="POST" class="delete-form">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-ghost btn-circle">
@@ -81,7 +87,5 @@
         </div>
     </div>
 
-    
+
 @endsection
-
-

@@ -1,53 +1,80 @@
 @extends('admin.layouts.master')
+
 @section('content')
     <div class="min-h-screen bg-base-200 p-6">
         <div class="max-w-5xl mx-auto">
             <!-- Header -->
             <div class="mb-8">
-                <div class="flex items-center gap-3 mb-4"> <i class="ri-add-circle-line text-3xl text-success"></i>
-                    <h1 class="text-4xl font-bold text-base-content">Tạo Mẫu Email Mới</h1>
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="ri-edit-line text-3xl text-primary"></i>
+                    <h1 class="text-4xl font-bold text-base-content">Chỉnh Sửa Mẫu Email</h1>
                 </div>
                 <div class="breadcrumbs text-sm">
                     <ul>
                         <li><a href="{{ route('admin.email-templates.index') }}"
                                 class="text-primary hover:text-primary-focus">Mẫu Email</a></li>
-                        <li class="text-base-content/70">Tạo mới</li>
+                        <li class="text-base-content/70">Chỉnh sửa: {{ $template->name }}</li>
                     </ul>
                 </div>
             </div>
-            <form action="{{ route('admin.email-templates.store') }}" method="POST" id="emailTemplateForm">
-                @include('admin.pages.emails.email-templates._form') </form>
+
+            <form action="{{ route('admin.email-templates.update', $template->template_id) }}" method="POST"
+                id="emailTemplateForm">
+                @method('PUT')
+                @include('admin.pages.emails.email-templates._form')
+            </form>
         </div>
-    </div> <!-- Preview Modal -->
+    </div>
+
+    <!-- Preview Modal -->
     <dialog id="previewModal" class="modal">
         <div class="modal-box w-11/12 max-w-4xl">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="font-bold text-lg flex items-center gap-2"> <i class="ri-mail-open-line text-primary"></i> Xem
-                    Trước Email </h3>
-                <form method="dialog"> <button class="btn btn-sm btn-circle btn-ghost"> <i class="ri-close-line"></i>
-                    </button> </form>
+                <h3 class="font-bold text-lg flex items-center gap-2">
+                    <i class="ri-mail-open-line text-primary"></i>
+                    Xem Trước Email
+                </h3>
+                <form method="dialog">
+                    <button class="btn btn-sm btn-circle btn-ghost">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </form>
             </div>
-            <div class="border rounded-lg overflow-hidden"> <!-- Email Header -->
+
+            <div class="border rounded-lg overflow-hidden">
+                <!-- Email Header -->
                 <div class="bg-base-200 p-4 border-b">
-                    <div class="flex items-center gap-2 text-sm"> <span class="font-semibold">Tiêu đề:</span> <span
-                            id="previewSubject" class="text-base-content/70"></span> </div>
-                </div> <!-- Email Content -->
+                    <div class="flex items-center gap-2 text-sm">
+                        <span class="font-semibold">Tiêu đề:</span>
+                        <span id="previewSubject" class="text-base-content/70"></span>
+                    </div>
+                </div>
+
+                <!-- Email Content -->
                 <div class="p-6 bg-white min-h-[400px]">
                     <div id="previewContent" class="prose max-w-none"></div>
                 </div>
             </div>
+
             <div class="modal-action">
-                <form method="dialog"> <button class="btn">Đóng</button> </form>
+                <form method="dialog">
+                    <button class="btn">Đóng</button>
+                </form>
             </div>
         </div>
-    </dialog> <!-- Loading Overlay -->
+    </dialog>
+
+    <!-- Loading Overlay -->
     <div id="loadingOverlay" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
         <div class="bg-base-100 p-6 rounded-lg shadow-xl">
-            <div class="flex items-center gap-3"> <span class="loading loading-spinner loading-md"></span> <span>Đang xử
-                    lý...</span> </div>
+            <div class="flex items-center gap-3">
+                <span class="loading loading-spinner loading-md"></span>
+                <span>Đang xử lý...</span>
+            </div>
         </div>
     </div>
 @endsection
+
 @push('customjs')
     <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
 

@@ -3,7 +3,6 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Storage;
 
 class TestimonialResource extends JsonResource
 {
@@ -19,9 +18,8 @@ class TestimonialResource extends JsonResource
             'customer_name' => $this->customer_name,
             'content'       => $this->testimonial_content,
             'rating'        => $this->rating,
-            'image_url'     => $this->image_url
-            ? asset(Storage::url($this->image_url))
-            : null,
+            'image_url'     => $this->image_url,
+
             'submitted_at'  => $this->submitted_at->format('d/m/Y'),
         ];
     }

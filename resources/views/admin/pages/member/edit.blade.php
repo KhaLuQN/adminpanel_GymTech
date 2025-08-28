@@ -125,9 +125,10 @@
                                                     <span class="label-text font-medium">Thêm/Thay đổi thẻ mới</span>
                                                 </label>
                                                 <div class="join w-full">
-                                                    <input type="text" name="rfid_card_id" id="newRfid"
+                                                    <input type="text" :name="newRfidValue ? 'rfid_card_id' : ''" id="newRfid"
                                                         x-model="newRfidValue" placeholder="Quẹt thẻ RFID vào đây" readonly
                                                         class="input input-bordered join-item flex-1 font-mono" />
+                                                    <input type="hidden" name="rfid_card_id" value="{{ $member->rfid_card_id }}" x-show="!newRfidValue" />
                                                     <button type="button" id="scanRfidBtn" @click="startScanRfid()"
                                                         :class="{ 'btn-success': isScanning, 'btn-primary': !isScanning }"
                                                         class="btn join-item">

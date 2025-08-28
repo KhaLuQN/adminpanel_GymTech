@@ -17,7 +17,7 @@ class LoginController
 
         if (Auth::attempt($credentials)) {
             return redirect()
-                ->route('dashboard.index')
+                ->route('admin.dashboard.index')
                 ->with('success', 'Đăng nhập thành công.');
         }
 
@@ -25,5 +25,11 @@ class LoginController
             'errors' => 'Tên đăng nhập hoặc mật khẩu không đúng.',
         ]);
 
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login')->with('success', 'Đăng xuất thành công.');
     }
 }

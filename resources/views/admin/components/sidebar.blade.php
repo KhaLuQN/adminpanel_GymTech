@@ -18,7 +18,7 @@
         <ul class="menu p-4 space-y-2">
             {{-- Bảng Điều Khiển --}}
             <li>
-                <a href="{{ route('dashboard.index') }}"
+                <a href="{{ route('admin.dashboard.index') }}"
                     class="flex items-center gap-2 px-4 py-2 rounded-lg transition-all hover:bg-base-300 {{ is_active('dashboard*') }}">
                     <i class="ri-dashboard-3-line"></i> Bảng Điều Khiển
                 </a>

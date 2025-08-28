@@ -54,7 +54,14 @@
                 <li><a><i class="ri-user-line"></i>Hồ sơ cá nhân</a></li>
                 <li><a onclick="toggleTheme()"><i class="ri-contrast-line"></i>Theme</a></li>
                 <li><a><i class="ri-settings-line"></i>Cài đặt</a></li>
-                <li><a><i class="ri-logout-box-line"></i>Đăng xuất</a></li>
+                <li>
+    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        <i class="ri-logout-box-line"></i>Đăng xuất
+    </a>
+</li>
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
             </ul>
         </div>
     </div>

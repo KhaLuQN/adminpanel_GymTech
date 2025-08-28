@@ -1,15 +1,14 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\LoginToken;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\LoginTokenMail;
+use App\Models\LoginToken;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class LoginTokenController extends Controller
 {
@@ -27,8 +26,8 @@ class LoginTokenController extends Controller
         $token = Str::random(64);
 
         LoginToken::create([
-            'user_id' => $user->id,
-            'token' => $token,
+            'user_id'    => $user->id,
+            'token'      => $token,
             'expires_at' => now()->addMinutes(15),
         ]);
 
@@ -45,7 +44,7 @@ class LoginTokenController extends Controller
             return redirect()->route('login')->withErrors(['email' => 'Liên kết đăng nhập không hợp lệ hoặc đã hết hạn.']);
         }
 
-        Auth::login($loginToken->user, true); // true for "remember me"
+        Auth::login($loginToken->user, true);
 
         $loginToken->delete();
 

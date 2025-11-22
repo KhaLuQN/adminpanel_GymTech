@@ -15,50 +15,51 @@
             <div class="space-y-3">
                 <div class="space-y-3">
                     @forelse ($contactNotifications as $contact)
+                        @php
+                            // Mapping type -> config
+                            $configs = [
+                                'complain' => [
+                                    'color' => '#f87171', // đỏ
+                                    'icon' => 'ri-error-warning-line',
+                                    'title' => 'Khiếu nại',
+                                ],
+                                'support' => [
+                                    'color' => '#60a5fa', // xanh dương
+                                    'icon' => 'ri-customer-service-2-line',
+                                    'title' => 'Yêu cầu hỗ trợ',
+                                ],
+                                'contact' => [
+                                    'color' => '#34d399', // xanh lá
+                                    'icon' => 'ri-mail-line',
+                                    'title' => 'Liên hệ',
+                                ],
+                                'default' => [
+                                    'color' => '#9ca3af', // xám
+                                    'icon' => 'ri-notification-2-line',
+                                    'title' => 'Thông báo khác',
+                                ],
+                            ];
+
+                            // Lấy config theo type
+                            $cfg = $configs[$contact->type] ?? $configs['default'];
+                        @endphp
+
                         <div class="alert"
-                            style="background-color: {{ $contact->color }}20; color: {{ $contact->color }};">
-                            @if ($contact->type === 'complain')
-                                <i class="ri-error-warning-line"></i>
-                                <div>
-                                    <div class="font-bold">Khiếu nại</div>
-                                    <div class="text-xs">
-                                        {{ $contact->full_name }} đã gửi khiếu nại lúc
-                                        {{ \Carbon\Carbon::parse($contact->submitted_at)->format('H:i d/m') }}
-                                    </div>
+                            style="background-color: {{ $cfg['color'] }}20; color: {{ $cfg['color'] }};">
+                            <i class="{{ $cfg['icon'] }}"></i>
+                            <div>
+                                <div class="font-bold">{{ $cfg['title'] }}</div>
+                                <div class="text-xs">
+                                    {{ $contact->full_name }} đã gửi lúc
+                                    {{ \Carbon\Carbon::parse($contact->submitted_at)->format('H:i d/m') }}
                                 </div>
-                            @elseif ($contact->type === 'support')
-                                <i class="ri-customer-service-2-line"></i>
-                                <div>
-                                    <div class="font-bold">Yêu cầu hỗ trợ</div>
-                                    <div class="text-xs">
-                                        {{ $contact->full_name }} cần hỗ trợ lúc
-                                        {{ \Carbon\Carbon::parse($contact->submitted_at)->format('H:i d/m') }}
-                                    </div>
-                                </div>
-                            @elseif ($contact->type === 'contact')
-                                <i class="ri-mail-line"></i>
-                                <div>
-                                    <div class="font-bold">Liên hệ</div>
-                                    <div class="text-xs">
-                                        {{ $contact->full_name }} đã gửi liên hệ lúc
-                                        {{ \Carbon\Carbon::parse($contact->submitted_at)->format('H:i d/m') }}
-                                    </div>
-                                </div>
-                            @else
-                                <i class="ri-notification-2-line"></i>
-                                <div>
-                                    <div class="font-bold">Thông báo khác</div>
-                                    <div class="text-xs">
-                                        {{ $contact->full_name }} đã gửi lúc
-                                        {{ \Carbon\Carbon::parse($contact->submitted_at)->format('H:i d/m') }}
-                                    </div>
-                                </div>
-                            @endif
+                            </div>
                         </div>
                     @empty
                         <div class="text-sm text-gray-500">Không có liên hệ mới</div>
                     @endforelse
                 </div>
+
 
             </div>
             <div class="card-actions">

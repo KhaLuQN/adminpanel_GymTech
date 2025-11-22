@@ -17,7 +17,7 @@
 
                 <div id="payments-list" class="overflow-x-auto">
 
-                    <table class="table table-zebra datatable">
+                    <table class="table table-zebra datatable" data-order='[[0,"asc"]]'>
                         <thead>
                             <tr>
                                 <th>ID Giao dịch</th>
@@ -32,7 +32,7 @@
                         <tbody>
                             @forelse ($payments as $payment)
                                 <tr>
-                                    <td>#{{ $payment->payment_id }}</td>
+                                    <td>{{ $payment->payment_id }}</td>
                                     <td>
                                         {{ $payment->subscription?->member?->full_name ?? '[Không xác định]' }}</td>
                                     <td>
@@ -49,7 +49,13 @@
                                     </td>
                                     <td>{{ $payment->payment_status }}</td>
                                     <td>
-                                        {{ \Carbon\Carbon::parse($payment->payment_date)->format('H:i d/m/Y') }}</td>
+                                        <div class="font-medium">
+                                            {{ \Carbon\Carbon::parse($payment->payment_date)->format(' d/m/Y') }}
+                                        </div>
+                                        <div class="text-gray-500">
+                                            {{ \Carbon\Carbon::parse($payment->payment_date)->format('H:i ') }}
+                                        </div>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>

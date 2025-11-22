@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('magic_links', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('token', 64)->unique();
-            $table->timestamp('expires_at');
-            $table->timestamps();
+        Schema::table('members', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('magic_links');
+        Schema::table('members', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 };

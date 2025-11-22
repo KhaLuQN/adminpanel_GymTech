@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Services;
 
 use App\Mail\CustomCampaignMail;
@@ -7,8 +6,8 @@ use App\Models\CommunicationLog;
 use App\Models\EmailTemplate;
 use App\Models\Member;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class MemberEngagementService
 {
@@ -26,12 +25,12 @@ class MemberEngagementService
         }
 
         if (isset($filters['campaign_name'])) {
-            $campaignName = $filters['campaign_name'];
+            $campaignName  = $filters['campaign_name'];
             $sentMemberIds = CommunicationLog::where('campaign_name', $campaignName)->pluck('member_id');
             $query->whereNotIn('member_id', $sentMemberIds);
         }
 
-        $members   = $query->with('subscriptions')->paginate(20)->withQueryString();
+        $members   = $query->with('subscriptions')->paginate(60)->withQueryString();
         $templates = EmailTemplate::all();
 
         return [

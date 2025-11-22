@@ -24,6 +24,9 @@
                     <table id="equipmentTable" class="table table-zebra w-full datatable">
                         <thead>
                             <tr>
+                                <th class="text-center w-16">
+                                    <i class="ri-hashtag text-lg"></i>
+                                </th>
                                 <th>Hình ảnh</th>
                                 <th>Tên thiết bị</th>
                                 <th>Ngày mua</th>
@@ -35,6 +38,9 @@
                         <tbody>
                             @foreach ($equipments as $equipment)
                                 <tr class="border-b">
+                                    <td class="text-center font-mono text-sm">
+                                        <div class="badge badge-outline">{{ $equipment->id }}</div>
+                                    </td>
                                     <td>
                                         @if ($equipment->img)
                                             <div class="avatar">

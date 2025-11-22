@@ -25,7 +25,7 @@ class MemberSubscription extends Model
 
     public function member(): BelongsTo
     {
-        return $this->belongsTo(Member::class, 'member_id');
+        return $this->belongsTo(Member::class, 'member_id')->withTrashed();
     }
 
     public function plan(): BelongsTo

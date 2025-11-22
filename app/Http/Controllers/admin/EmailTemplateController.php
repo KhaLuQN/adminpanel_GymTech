@@ -42,7 +42,7 @@ class EmailTemplateController extends Controller
 
     public function edit(EmailTemplate $emailTemplate)
     {
-        return view('admin.pages.emails.email-templates.create', ['template' => $emailTemplate]);
+        return view('admin.pages.emails.email-templates.edit', ['template' => $emailTemplate]);
     }
 
     public function update(Request $request, EmailTemplate $emailTemplate)

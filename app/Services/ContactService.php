@@ -11,7 +11,7 @@ class ContactService
 {
     public function getContactsForIndex()
     {
-        return Contact::latest()->paginate(15)->withQueryString();
+        return Contact::latest()->paginate(50)->withQueryString();
     }
 
     public function resolveContact(Contact $contact)
